@@ -1,0 +1,27 @@
+{% extends 'authentication/base_auth.html' %}
+
+{% block title %} Добро пожаловать {% endblock %}
+
+{% block body %}
+<main class="w-50 align-items-center justify-content-center">
+    <div class="card position-absolute top-50 start-50 translate-middle">
+        <div class="card-header bg-dark text-white text-center">
+            Вход в аккаунт
+        </div>
+        <div class="card-body">
+            <form method="post">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <div class="form-group text-center p-2">
+                    <button type="submit" class="btn btn-success">Войти</button>
+                </div>
+            </form>
+        </div>
+        <div class="card-footer text-muted">
+            <div class="text-center">
+                <a type="button" class="btn text-decoration-none" href="{% url 'register' %}">Регистрация</a>
+            </div>
+        </div>
+    </div>
+</main>
+{% endblock %}
