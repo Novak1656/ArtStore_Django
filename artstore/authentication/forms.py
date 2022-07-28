@@ -1,5 +1,5 @@
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
-from .models import Users
+from .models import User
 from django.forms import CharField, EmailInput, PasswordInput, EmailField,\
     TextInput, BooleanField, CheckboxInput, TypedChoiceField, Select
 
@@ -20,7 +20,7 @@ class UserRegisterForm(UserCreationForm):
                             widget=Select(attrs={'class': 'form-control'}))
 
     class Meta:
-        model = Users
+        model = User
         fields = ('username', 'email', 'password1', 'password2', 'role')
 
 

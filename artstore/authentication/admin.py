@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Users
+from .models import User
 
 
 class UsersAdmin(admin.ModelAdmin):
@@ -8,4 +8,4 @@ class UsersAdmin(admin.ModelAdmin):
     list_filter = ('last_login',)
 
 
-admin.site.register(Users, UsersAdmin)
+admin.site.register(User, UsersAdmin)

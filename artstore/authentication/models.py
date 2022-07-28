@@ -1,13 +1,15 @@
-import os
-
-from django.conf import settings
 from django.db import models
-from django.contrib.auth.models import User
+from django.contrib.auth.models import AbstractUser
 
 
-class Users(User):
+def get_avatar_url(instance, filename):
+    return f"img/user_avatars/{instance.username}/{filename}"
+
+
+class User(AbstractUser):
     roles = models.CharField('Статус', default='Пользователь', max_length=100)
-    date_of_birth = models.DateField('Дата рождения', null=True)
-    avatar = models.CharField('Аватар', max_length=250,
-                              default=os.path.join(settings.BASE_DIR,
-                                                   'authentication/static/img/avatar.jpg'))
+    date_of_birth = models.DateField('Дата рождения', null=True, blank=True)
+    avatar = models.ImageField('Аватар', upload_to=get_avatar_url, blank=True)
+
+    def __str__(self):
+        return self.username
