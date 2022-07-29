@@ -9,6 +9,7 @@ urlpatterns = [
     path('auth/', include('authentication.urls')),
     path('', include('shop.urls')),
     path('profile/', include('user_profile.urls')),
+    path('gallery/', include('galery.urls')),
 ]
 
 if settings.DEBUG:

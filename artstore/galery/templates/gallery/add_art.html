@@ -1,0 +1,20 @@
+{% extends 'gallery/base_gallery.html' %}
+
+{% block title %} Новый арт {% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="text-center">
+        <h1 class="display-4">Добавление нового арта</h1>
+    </div>
+    <div class="container bg-success bg-opacity-75 rounded w-50">
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <div class="form-group p-3 text-center">
+                <button type="submit" class="btn btn-success">Добавить</button>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

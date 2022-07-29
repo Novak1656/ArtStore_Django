@@ -30,6 +30,7 @@ INSTALLED_APPS = [
     'authentication.apps.AuthenticationConfig',
     'shop.apps.ShopConfig',
     'user_profile.apps.UserProfileConfig',
+    'galery.apps.GaleryConfig',
 ]
 
 MIDDLEWARE = [

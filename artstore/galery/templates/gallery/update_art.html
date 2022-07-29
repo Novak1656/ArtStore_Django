@@ -1,0 +1,21 @@
+{% extends 'gallery/base_gallery.html' %}
+
+{% block title %} Редактирование Арта {% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="text-center">
+        <h1 class="display-4">Редактирование арта</h1>
+    </div>
+
+    <div class="bg-success bg-opacity-75 p-3 container w-50 rounded">
+        <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <div class="form-group p-3 text-center">
+                <button type="submit" class="btn btn-success">Сохранить изменения</button>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}
