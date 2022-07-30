@@ -1,0 +1,110 @@
+{% extends 'shop/base_shop.html' %}
+
+{% block title %} ArtStore {% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="text-center">
+        <h1 class="display-4">Торговая площадка</h1>
+    </div>
+
+    <div class="mb-3">
+        <nav class="navbar navbar-expand-lg navbar-light bg-light rounded">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <a class="navbar-brand mb-0 h1" href="{% url 'main' %}">Разделы</a>
+                </div>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse w-100" id="navbarNav">
+                    <ul class="navbar-nav">
+                        <li class="nav-item p-1">
+                            <div class="btn-group">
+                                <a type="button" class="btn btn-outline-info" href="">Категории артов</a>
+                                <button type="button" class="btn btn-outline-info dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" aria-expanded="false"></button>
+                                <ul class="dropdown-menu">
+                                    {% for genre in genres %}
+                                    <li><a class="dropdown-item" href="">{{ genre.title }}</a></li>
+                                    {% endfor %}
+                                </ul>
+                            </div>
+                        </li>
+                        <li class="nav-item p-1">
+                            <a type="button" class="btn btn-outline-warning" href="">Авторы</a>
+                        </li>
+                        <li class="nav-item p-1">
+                            <a type="button" class="btn btn-outline-success" href="{% url 'basket' %}">
+                                Корзина |
+                                <span class="text-end badge rounded-pill bg-danger">
+                                    {{ basket_list|length }}
+                                    <span class="visually-hidden">Кол-во товаров в корзине</span>
+                                </span>
+                            </a>
+                        </li>
+                        <li class="nav-item p-1 text-end">
+                            <form method="post" class="d-flex">
+                                <div class="input-group">
+                                    <input class="bg-dark text-white form-control" name="search_word" placeholder="Поиск...">
+                                    <button type="submit" name="search_btn" value="search" class="btn btn-outline-success"><i class="bi bi-search"></i></button>
+                                </div>
+                            </form>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </div>
+
+    <div class="album py-5 bg-light rounded">
+        <div class="container">
+            <div class="row gy-5">
+                {% for art in arts %}
+                <div class="col" align="center">
+                    <div class="card shadow-sm mb-4 h-100" style="width: 20rem;">
+                        <img src="{{ art.art.url }}" class="rounded card-img" oncontextmenu="return false">
+                        <div class="card-body">
+                            <h1 class="card-text display-6">{{ art.title }}</h1>
+                            <p class="card-text">Автор: {{ art.author }}</p>
+                        </div>
+                        <div class="card-img-overlay text-end shadow-sm">
+                            <span class="bg-danger text-white rounded-pill p-1">{{ art.genre }}</span>
+                        </div>
+                        <div class="card-footer">
+                            {% if art.id in basket_list %}
+                            <div class="btn-group w-100">
+                                <a type="button" class="btn btn-outline-info" href="{% url 'basket' %}" >Перейти в корзину</a>
+                            </div>
+                            {% else %}
+                            <div class="btn-group">
+                                <a href="{% url 'add_in_basket' art.id %}" class="btn btn-outline-success"> {{ art.prise }} rub </a>
+                            </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+
+        <div class="bg-dark mt-5 fixed-bottom">
+            <nav aria-label="PaginationBar">
+                <ul class="pagination justify-content-center p-3">
+                    {% for p in page_obj.paginator.page_range %}
+                        {% if page_obj.number == p %}
+                            <li class="page-item" aria-current="page">
+                                <a href="?page={{ p }}" class="page-link">{{ p }}</a>
+                            </li>
+                        {% elif p > page.obj.number|add:-3 and p < page_obj.number|add:3 %}
+                            <li class="page-item">
+                                <a href="?page={{ p }}" class="page-link">{{ p }}</a>
+                            </li>
+                        {% endif %}
+                    {% endfor %}
+
+                </ul>
+            </nav>
+        </div>
+    </div>
+</div>
+{% endblock %}

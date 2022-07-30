@@ -44,10 +44,10 @@ def update_art(request, pk):
 
 
 @login_required
-def delete_art(request, pk, is_gallery=False):
+def delete_art(request, pk, is_gallery=0):
     if request.user.roles != 'Автор':
         return redirect(reverse('main'))
-    if is_gallery:
+    if is_gallery == 1:
         art = request.user.gallery.get(pk=pk)
     else:
         art = request.user.art.get(pk=pk)

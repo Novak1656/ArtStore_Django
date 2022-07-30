@@ -1,0 +1,54 @@
+{% extends 'shop/base_shop.html' %}
+
+{% block title %} Моя корзина {% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="text-center">
+        <h1 class="display-6">Корзина товаров</h1>
+    </div>
+
+    <div class="container bg-light rounded">
+        {% if arts|length == 0 %}
+        <div class="p-3">
+            <h1 class="display-6">Вашей корзине нет товаров</h1>
+        </div>
+
+        {% else %}
+        <div class="row gy-5">
+            {% for art in arts %}
+            <div class="col mb-3" align="center">
+                <div class="card shadow-sm mb-4 h-100" style="width: 20rem;">
+                    <img src="{{ art.art_id.art.url }}" class="rounded card-img" oncontextmenu="return false">
+                    <div class="card-body">
+                        <h1 class="card-text display-6">{{ art.art_id.title }}</h1>
+                        <p class="card-text">Автор: {{ art.art_id.author }}</p>
+                    </div>
+                    <div class="card-footer text-center">
+                        <p class="card-text">Цена: {{ art.art_id.prise }} rub.</p>
+                    </div>
+                    <div class="card-img-overlay text-start shadow-sm">
+                        <a href="{% url 'delete_basket_art' art.id %}" type="button" class="btn bg-danger btn-close"></a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        {% endif %}
+    </div>
+
+    <div class="bg-dark text-white rounded p-1">
+        <h2 class="display-9">Сумма: {{ sum_prise }} rub.</h2>
+        <p class="display-9">Кол-во товаров: {{ arts|length }}</p>
+
+            <div class="form-group">
+                {% if arts|length == 0 %}
+                <a type="button" class="btn btn-success w-100 disabled" href="{% url 'buy_arts' %}">Перейти к оплате</a>
+                {% else %}
+                <a type="button" class="btn btn-success w-100" href="{% url 'buy_arts' %}">Перейти к оплате</a>
+                {% endif %}
+            </div>
+
+    </div>
+</div>
+{% endblock %}

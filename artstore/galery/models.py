@@ -6,6 +6,10 @@ def get_art_url(instance, filename):
     return f"img/arts/shop_arts/{instance.author.username}/{filename}"
 
 
+def get_g_art_url(instance, filename):
+    return f"img/arts/gallery/{instance.user.username}/{filename}"
+
+
 class Genre(models.Model):
     title = models.CharField('Название', max_length=250)
 
@@ -31,14 +35,14 @@ class Art(models.Model):
 
 class Gallery(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='gallery')
-    art = models.ImageField('Арт', upload_to=get_art_url)
+    art = models.ImageField('Арт', upload_to=get_g_art_url)
     art_title = models.CharField('Название', max_length=250)
     genre = models.CharField('Жанр', max_length=150)
     author = models.CharField('Автор', max_length=150)
     created_on = models.DateTimeField('Время добавления', auto_now_add=True)
 
     def __str__(self):
-        return self.art.name
+        return f"{self.user.username}: {self.art_title}"
 
     class Meta:
         ordering = ['-created_on']

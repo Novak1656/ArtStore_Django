@@ -10,7 +10,8 @@
         </div>
         <div class="w-50 position-absolute top-50 start-50 translate-middle" style="margin-top: 300px">
 
-            {% if messages %}
+            <div class="mt-5">
+                {% if messages %}
                 {% for message in messages %}
                     {% if message.tags == 'error' %}
                         <div class="alert alert-danger" role="alert">
@@ -23,6 +24,7 @@
                     {% endif %}
                 {% endfor %}
             {% endif %}
+            </div>
 
             <form method="post">
                 {% csrf_token %}

@@ -73,7 +73,7 @@
                             <p>После удаления данная иллюстрация больше не будет отображаться в магазине.</p>
                         </div>
                         <div class="modal-footer">
-                            <a type="button" class="btn btn-success" href="{% url 'delete_art' art.pk %}">Да</a>
+                            <a type="button" class="btn btn-success" href="{% url 'delete_art' art.pk 0 %}">Да</a>
                             <button class="btn btn-danger" data-bs-dismiss="modal">Нет</button>
                         </div>
                     </div>
