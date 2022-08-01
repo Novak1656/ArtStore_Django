@@ -14,14 +14,14 @@ class UserRegisterForm(UserCreationForm):
     password2 = CharField(label='Подтверждение пароля',
                                 widget=PasswordInput(attrs={'class': 'form-control'}))
 
-    role = TypedChoiceField(label='Я', empty_value=('Пользователь', 'Пользователь (может покупать иллюстрации)'),
-                            choices=(('Пользователь', 'Пользователь (может покупать иллюстрации)'),
-                                     ('Автор', 'Автор (может покупать иллюстрации, а также продавать свои)')),
-                            widget=Select(attrs={'class': 'form-control'}))
+    roles = TypedChoiceField(label='Я', empty_value=('Пользователь', 'Пользователь (может покупать иллюстрации)'),
+                             choices=(('Пользователь', 'Пользователь (может покупать иллюстрации)'),
+                                      ('Автор', 'Автор (может покупать иллюстрации, а также продавать свои)')),
+                             widget=Select(attrs={'class': 'form-control'}))
 
     class Meta:
         model = User
-        fields = ('username', 'email', 'password1', 'password2', 'role')
+        fields = ('username', 'email', 'password1', 'password2', 'roles')
 
 
 class UserLoginForm(AuthenticationForm):

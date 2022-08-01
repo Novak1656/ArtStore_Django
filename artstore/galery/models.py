@@ -16,6 +16,9 @@ class Genre(models.Model):
     def __str__(self):
         return self.title
 
+    class Meta:
+        ordering = ['title']
+
 
 class Art(models.Model):
     title = models.CharField('Название', max_length=250)
