@@ -20,7 +20,7 @@
                 </button>
                 <div class="collapse navbar-collapse w-100" id="navbarNav">
                     <ul class="navbar-nav">
-                        {% get_genres %}
+                        {% get_genres author_name %}
                         <li class="nav-item p-1">
                             <a type="button" class="btn btn-outline-warning" href="{% url 'all_authors' %}">Авторы</a>
                         </li>

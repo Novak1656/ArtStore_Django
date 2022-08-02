@@ -20,12 +20,15 @@ class Shop(LoginRequiredMixin, ListView):
     def get_queryset(self):
         if self.request.GET.get('author_name') and self.request.GET.get('genre_name'):
             return Art.objects.filter(Q(author__username=self.request.GET.get('author_name')) &
-                                      Q(genre__title=self.request.GET.get('genre_name'))).all()
+                                      Q(genre__title=self.request.GET.get('genre_name')))\
+                .select_related("author", "genre").all()
         elif self.request.GET.get('author_name'):
-            return Art.objects.filter(author__username=self.request.GET.get('author_name')).all()
+            return Art.objects.filter(author__username=self.request.GET.get('author_name'))\
+                .select_related("author", "genre").all()
         elif self.request.GET.get('genre_name'):
-            return Art.objects.filter(genre__title=self.request.GET.get('genre_name')).all()
-        return Art.objects.all()
+            return Art.objects.filter(genre__title=self.request.GET.get('genre_name'))\
+                .select_related("author", "genre").all()
+        return Art.objects.select_related("author", "genre").all()
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -45,7 +48,7 @@ class BasketView(LoginRequiredMixin, ListView):
     login_url = 'login'
 
     def get_queryset(self):
-        return self.request.user.basket_user.all()
+        return self.request.user.basket_user.select_related("art_id", "user_id").all()
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -60,7 +63,8 @@ class Search(LoginRequiredMixin, ListView):
     paginate_by = 6
 
     def get_queryset(self):
-        return Art.objects.filter(title__icontains=self.request.GET.get('search_word')).all()
+        return Art.objects.filter(title__icontains=self.request.GET.get('search_word'))\
+            .select_related("author", "genre").all()
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)

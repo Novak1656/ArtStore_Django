@@ -1,11 +1,15 @@
 from django import template
+from django.core.cache import cache
 from galery.models import Genre
 register = template.Library()
 
 
 @register.inclusion_tag('shop/genre_list.html')
 def get_genres(author_name):
-    genres = Genre.objects.all()
+    genres = cache.get('genres')
+    if not genres:
+        genres = Genre.objects.all()
+        cache.set('genres', genres, 300)
     data = {'genres': genres}
     if author_name:
         data['author_name'] = author_name
